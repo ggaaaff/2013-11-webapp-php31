@@ -37,6 +37,15 @@ function login($username, $password)
   if (!$conn)
     return 0;
 
+  // //DEBUG
+  // $var_sql = "select * from user
+  //              where username='$username'
+  //              and passwd = password('$password')";
+  // echo "SQL   ". $var_sql . "  SQL";
+  // exit;
+
+
+
   // check if username is unique
   $result = mysql_query("select * from user
                          where username='$username'
@@ -53,10 +62,14 @@ function login($username, $password)
 function check_valid_user()
 // see if somebody is logged in and notify them if not
 {
-  global $valid_user;
-  if (session_is_registered("valid_user"))
+
+  // 2013.11.14 Gustaf - Actualizada acceso varible sesión.
+  // global $valid_user; // 2013.11.14 Gustaf - DESACTIVADO
+  if ( isset($_SESSION["valid_user"]) ) 
+  // if (session_is_registered("valid_user"))
   {
-      echo "Logged in como $valid_user.";
+      $valid_user = $_SESSION['valid_user'];
+      echo "Logged in como <b>" . $valid_user . "</b>.";
       echo "<br>";
   }
   else
@@ -99,7 +112,7 @@ function get_random_word($min_length, $max_length)
 {
    // generate a random word
   $word = "";
-  $dictionary = "/usr/dict/words";  // the ispell dictionary
+  $dictionary = "words";  // the ispell dictionary
   $fp = fopen($dictionary, "r");
   $size = filesize($dictionary);
 

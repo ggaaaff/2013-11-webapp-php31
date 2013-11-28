@@ -24,9 +24,16 @@ function get_user_urls($username)
 function add_bm($new_url)
 {
   // Add new bookmark to the database
-
   echo "Intentando añadir ".htmlspecialchars($new_url)."<BR>";
-  global $valid_user;
+
+  // 2013.11.14 Gustaf - Actualizada acceso varible sesión.
+  $valid_user = "";
+  if ( isset($_SESSION['valid_user']) )
+  {
+    $valid_user = $_SESSION['valid_user'];
+  }
+
+  // global $valid_user; // 2013.11.14 Gustaf - DESACTIVADO
   if (!($conn = db_connect()))
     return false;
 

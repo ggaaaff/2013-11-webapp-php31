@@ -120,11 +120,15 @@ function display_user_urls($url_array)
   // set global variable, so we can test later if this is on the page
   global $bm_table;
   $bm_table = true;
+
+  // 2013.11.18 Gustaf - Variable global para indicar si se mostraron bookmarks;
+  global $bm_displayed;
+  $bm_displayed = true; // 2013.11.18 Gustaf - Valor inicial variable global.
 ?>
   <br>
   <form name=bm_table action="delete_bms.php" method=post>
   <table width=300 cellpadding=2 cellspacing=0>
-  <?
+ <?
   $color = "#cccccc";
   echo "<tr bgcolor=$color><td><strong>Marcador</strong></td>";
   echo "<td><strong>¿Borrar?</strong></td></tr>";
@@ -144,7 +148,10 @@ function display_user_urls($url_array)
     }
   }
   else
+  {
+    $bm_displayed = false; // 2013.11.18 Gustaf - Actualizada variable global.
     echo "<tr><td>No hay marcadores guardados</td></tr>";
+  }
 ?>
   </table>
   </form>
@@ -161,7 +168,10 @@ function display_user_menu()
 <?
   // only offer the delete option if bookmark table is on this page
   global $bm_table;
-  if($bm_table==true)
+
+  global $bm_displayed; // 2013.11.18 Gustaf - Verifica usuario tiene bookmarks para seleccionar.
+  if($bm_table==true && $bm_displayed == true) // 2013.11.18 Gustaf - Actualizado
+  // if($bm_table==true)
     echo "<a href='#' onClick='bm_table.submit();'>Borrar EN</a>&nbsp;|&nbsp;";
   else
     echo "<font color='#cccccc'>Borrar EN</font>&nbsp;|&nbsp;";

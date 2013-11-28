@@ -9,7 +9,8 @@
 
 
    // check forms filled in
-   if (!filled_out($HTTP_POST_VARS))
+   if (!filled_out($_POST)) //2013.11.11 Gustaf - Acceso a variables POST
+   // if (!filled_out($HTTP_POST_VARS)) 
    {
       do_html_header("Problema:");
       echo "No has cubierto el formulario correctametne - Por favor vuelve"
@@ -17,6 +18,14 @@
       do_html_footer();
       exit;
    }
+
+
+   //2013.11.14 Gustaf - Acceso a variables POST.
+   $email     = $_POST['email'];
+   $username  = $_POST['username'];
+   $passwd    = $_POST['passwd'];
+   $passwd2   = $_POST['passwd2'];
+
 
    // email address not valid
    if (!valid_email($email))
@@ -54,8 +63,12 @@
    if ($reg_result == "true")
    {
      // register session variable
-     $valid_user = $username;
-     session_register("valid_user");
+     // 2013.11.14 Gustaf - Actualizado registro varible sesión.
+     $_SESSION['valid_user'] = $username;
+
+     // $valid_user = $username;
+     // session_register("valid_user");
+     // --
 
      // provide link to members page
      do_html_header("Registro correcto");
